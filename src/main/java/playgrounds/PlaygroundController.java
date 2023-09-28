@@ -55,14 +55,23 @@ public class PlaygroundController {
 
     @DeleteMapping("/playgrounds/{id}")
     void deletePlayground(@PathVariable Long id) {
+
         repository.deletePlayground(id);
     }
 
     @PostMapping("/playgrounds/{pgid}/playsite/{psid}")
     void addKidToPlaySite(@PathVariable Long pgid,
-                                       @PathVariable Long psid,
-                                       @RequestBody Kid kid) {
+                          @PathVariable Long psid,
+                          @RequestBody Kid kid) {
 
         repository.addKidToPlaySite(pgid, psid, kid);
+    }
+
+    @DeleteMapping("/playgrounds/{pgid}/playsite/{psid}/kid/{kidid}")
+    void removeKidFromPlaySite(@PathVariable Long pgid,
+                               @PathVariable Long psid,
+                               @PathVariable Long kidid) {
+
+        repository.removeKidFromPlaySite(pgid, psid, kidid);
     }
 }

@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class Playground {
+
     private Long id;
     private List<PlaySite> playSites;
 }

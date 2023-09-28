@@ -83,4 +83,23 @@ public class PlaygroundRepository {
 
         return kid;
     }
+
+    public void removeKidFromPlaySite(Long pgid, Long psid, Long kidid) {
+        Playground playground = findById(pgid);
+        List<PlaySite> playSites = playground.getPlaySites();
+        PlaySite playSite = null;
+        for (PlaySite ps: playSites) {
+            if (ps.getId().equals(psid)) {
+                playSite = ps;
+            }
+        }
+
+        if (playSite != null) {
+            List<Kid> kidsOnSite = playSite.getKidsOnSite();
+            List<Kid> kidsInQueue = playSite.getKidsInQueue();
+
+            kidsOnSite.removeIf(kid -> kid.getId().equals(kidid));
+            kidsInQueue.removeIf(kid -> kid.getId().equals(kidid));
+        }
+    }
 }
