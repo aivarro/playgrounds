@@ -57,7 +57,7 @@ public class PlaygroundRepository {
         Playground playground = findById(pgid);
         List<PlaySite> playSites = playground.getPlaySites();
         PlaySite playSite = null;
-        for (PlaySite ps: playSites) {
+        for (PlaySite ps : playSites) {
             if (ps.getId().equals(psid)) {
                 playSite = ps;
             }
@@ -88,7 +88,7 @@ public class PlaygroundRepository {
         Playground playground = findById(pgid);
         List<PlaySite> playSites = playground.getPlaySites();
         PlaySite playSite = null;
-        for (PlaySite ps: playSites) {
+        for (PlaySite ps : playSites) {
             if (ps.getId().equals(psid)) {
                 playSite = ps;
             }
@@ -100,6 +100,19 @@ public class PlaygroundRepository {
 
             kidsOnSite.removeIf(kid -> kid.getId().equals(kidid));
             kidsInQueue.removeIf(kid -> kid.getId().equals(kidid));
+
+            updateQueue(playSite);
+        }
+    }
+
+    private void updateQueue(PlaySite playSite) {
+        List<Kid> kidsOnSite = playSite.getKidsOnSite();
+        List<Kid> kidsInQueue = playSite.getKidsInQueue();
+        if (!kidsInQueue.isEmpty()) {
+            kidsInQueue.stream().filter(kid -> kidsOnSite.size() < playSite.getCapacity()).forEach(kid -> {
+                kidsOnSite.add(kid);
+                kidsInQueue.remove(kid);
+            });
         }
     }
 }
